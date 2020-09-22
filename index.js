@@ -29,8 +29,7 @@ function getName(character) {
  * Sample data expected output: 5
  */
 function getFilmCount(character) {
-  // TODO: Add your code inside the functions (others below).
-
+  return character.films.length;
 }
 
 /**
@@ -42,7 +41,11 @@ function getFilmCount(character) {
  * If length is 0. Return 'none'
 */
 function getSecondStarshipName(character) {
-  // TODO: Add your code here.
+  if(character.starships.length === 0) {
+    return 'none';
+  } else {
+    return character.starships[1].name;
+  }
 }
 
 /**
@@ -55,7 +58,7 @@ function getSecondStarshipName(character) {
  *    Result: `Luke Skywalker, 172cm, 77kg. Featured in 5 films.`
  */
 function getSummary(character) {
-  // TODO: Add your code here.
+  return `${character.name}, ${character.height}cm, ${character.mass}kg. Featured in ${character.films.length} films.`;
 }
 
 /**
@@ -67,7 +70,9 @@ function getSummary(character) {
  * Sample data expected output: 8000
 */
 function getVehiclesCostInCreditsSumTotal(character) {
-  // TODO: Add your code here.
+  return character.vehicles.reduce((acc, curr) => {
+    return parseInt(acc) + (parseInt(curr.cost_in_credits) || 0);
+  }, 0);
 }
 
 /**
@@ -81,7 +86,9 @@ function getVehiclesCostInCreditsSumTotal(character) {
  * Sample data expected output: 27
 */
 function getStarshipPassengerAndCrewSumTotal(character) {
-  // TODO: Add your code here.
+  return character.starships.reduce((arr, curr) => {
+    return arr + curr.crew + curr.passengers;
+  }, 0)
 }
 
 /**
@@ -98,7 +105,19 @@ function getStarshipPassengerAndCrewSumTotal(character) {
  * Given film #7, expected error: `There are only 3 Star Wars movies. Flan fiction excluded.`
 */
 function getNthFilm(character, filmNumber) {
-  // TODO: Add your code here.
+  switch(filmNumber) {
+    case 1:
+      return character.films[filmNumber - 1];
+      break;
+    case 2:
+      return character.films[filmNumber - 1];
+      break;
+    case 3:
+      return character.films[filmNumber - 1];
+      break;
+    default:
+      return  `There are only 3 Star Wars movies. Flan fiction excluded.`;
+  }
 }
 
 /**

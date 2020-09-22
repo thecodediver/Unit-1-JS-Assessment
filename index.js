@@ -131,7 +131,13 @@ function getNthFilm(character, filmNumber) {
  * Sample data expected output: 80124
 */
 function getCargoCapacityTotal(character) {
-  // TODO: Add your code here.
+  let vehicles = character.vehicles.reduce((arr, curr) => {
+    return arr + (parseInt(curr.cargo_capacity, 10) || 0); 
+  }, 0);
+  let starships = character.starships.reduce((arr, curr) => {
+    return arr + (parseInt(curr.cargo_capacity, 10) || 0); 
+  }, 0);
+  return vehicles + starships;
 }
 
 /**
@@ -146,7 +152,13 @@ function getCargoCapacityTotal(character) {
  * Sample data expected output: `X-wing`
 */
 function getFastestStarshipName(character) {
-  // TODO: Add your code here.
+  if(character.starships.length === 0) {
+    return 'none';
+  }
+  let fastest = character.starships.reduce((arr, curr) => {
+    return arr.max_atmosphering_speed > parseInt(curr.max_atmosphering_speed) ? arr : curr;
+  }, 0);
+  return fastest.name;
 }
 
 /**
@@ -161,7 +173,13 @@ function getFastestStarshipName(character) {
  * Sample data expected output: `Lambda-class T-4a shuttle`
 */
 function getLargestCargoStarshipModelName(character) {
-  // TODO: Add your code here.
+  if(character.starships.length === 0) {
+    return 'none';
+  }
+  let fastest = character.starships.reduce((arr, curr) => {
+    return arr.cargo_capacity > (parseInt(curr.cargo_capacity, 10) || 0 ) ? arr : curr;
+  }, 0);
+  return fastest.model;
 }
 
 /**
@@ -175,7 +193,28 @@ function getLargestCargoStarshipModelName(character) {
  *
 */
 function getSlowestVehicleOrStarshipName(character) {
-  // TODO: Add your code here.
+  if(character.starships.length === 0 && character.vehicles.length === 0) {
+    return 'none';
+  }
+  let slowestStarship = character.starships.reduce((arr, curr) => {
+    return arr.max_atmosphering_speed < parseInt(curr.max_atmosphering_speed) ? arr : curr;
+  }, 0);
+
+  let slowestVehicle = character.vehicles.reduce((arr, curr) => {
+    return arr.max_atmosphering_speed < parseInt(curr.max_atmosphering_speed) ? arr : curr;
+  }, 0);
+
+  if(character.starships.length === 0) {
+    return slowestVehicle.name;
+  } else if (character.vehicles.length === 0) {
+    return slowestStarship;
+  } else {
+    if(parseFloat(slowestStarship.max_atmosphering_speed) > parseFloat(slowestVehicle.max_atmosphering_speed)) {
+      return slowestVehicle.name;
+    } else {
+      return slowestStarship.name;
+    }
+  }
 }
 
 
